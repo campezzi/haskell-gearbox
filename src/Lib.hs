@@ -18,23 +18,17 @@ data GearBox = GearBox
   }
 
 instance Show GearBox where
-  show gearBox = "Current Gear: " ++ currentNumber ++ "/" ++ totalNumber
+  show gearBox =
+    "Current Gear: " ++ show currentNumber ++ "/" ++ show totalNumber
     where
       (lower, current, higher) = getGears gearBox
-      currentNumber = show $ length lower + 1
-      totalNumber = show $ length lower + length higher + 1
-
-data Error =
-  GearBoxMustContainAtLeastOneGear
+      currentNumber = length lower + 1
+      totalNumber = currentNumber + length higher
 
 data GearPerformance
   = Ideal
   | RPMTooLow
   | RPMTooHigh
-
-mkGearBox :: [Gear] -> Either Error GearBox
-mkGearBox [] = Left GearBoxMustContainAtLeastOneGear
-mkGearBox (firstGear:otherGears) = Right (GearBox [] firstGear otherGears)
 
 run :: GearBox -> RPM -> GearBox
 run gearBox rpm =
