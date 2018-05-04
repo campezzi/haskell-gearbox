@@ -26,18 +26,16 @@ instance Show GearBox where
       totalNumber = currentNumber + length higher
 
 data GearPerformance
-  = Ideal
+  = Optimal
   | RPMTooLow
   | RPMTooHigh
 
-reactToRPM :: GearBox -> RPM -> GearBox
-reactToRPM gearBox rpm =
-  case gearPerformance current rpm of
+optimizePerformance :: GearBox -> RPM -> GearBox
+optimizePerformance gearBox rpm =
+  case gearPerformance (currentGear gearBox) rpm of
     RPMTooLow -> shiftDown gearBox
     RPMTooHigh -> shiftUp gearBox
-    Ideal -> gearBox
-  where
-    (lower, current, higher) = getGears gearBox
+    Optimal -> gearBox
 
 getGears :: GearBox -> ([Gear], Gear, [Gear])
 getGears = liftA3 (,,) lowerGears currentGear higherGears
@@ -46,7 +44,7 @@ gearPerformance :: Gear -> RPM -> GearPerformance
 gearPerformance gear rpm
   | rpm < minimumRPM gear = RPMTooLow
   | rpm > maximumRPM gear = RPMTooHigh
-  | otherwise = Ideal
+  | otherwise = Optimal
 
 shiftDown :: GearBox -> GearBox
 shiftDown gearBox =
