@@ -6,7 +6,10 @@ import Lib
 import Text.Read (readMaybe)
 
 main :: IO ((), GearBox)
-main = runStateT (forever iteration) genericGearBox
+main = do
+  putStrLn "Starting car..."
+  print genericGearBox
+  runStateT (forever iteration) genericGearBox
 
 genericGear :: Gear
 genericGear = Gear (RPM 500) (RPM 2000)
