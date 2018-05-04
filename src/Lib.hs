@@ -30,8 +30,8 @@ data GearPerformance
   | RPMTooLow
   | RPMTooHigh
 
-run :: GearBox -> RPM -> GearBox
-run gearBox rpm =
+reactToRPM :: GearBox -> RPM -> GearBox
+reactToRPM gearBox rpm =
   case gearPerformance current rpm of
     RPMTooLow -> shiftDown gearBox
     RPMTooHigh -> shiftUp gearBox

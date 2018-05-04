@@ -29,4 +29,4 @@ iteration =
       Just rpm -> do
         print updatedGearBox
         return ((), updatedGearBox)
-        where updatedGearBox = run gearBox (RPM rpm)
+        where updatedGearBox = reactToRPM gearBox (RPM rpm)
